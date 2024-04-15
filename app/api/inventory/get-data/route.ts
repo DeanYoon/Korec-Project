@@ -1,12 +1,11 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET() {
+  const query = sql`SELECT * FROM inventory;`;
   try {
     // Fetch all data from the Inventory table
-    const inventoryData = await sql`
-      SELECT * FROM Inventory;
-    `;
+    const inventoryData = await query;
 
     // Return the fetched data
     return NextResponse.json({ inventoryData }, { status: 200 });

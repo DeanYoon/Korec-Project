@@ -22,10 +22,11 @@ export default function Login() {
         body: JSON.stringify(data),
       });
       const responseData = await response.json();
-      console.log(responseData);
-      // Handle response data, such as redirecting on successful login
 
+      // Handle response data, such as redirecting on successful login
       if (responseData.status === 200) {
+        const currentUsername = responseData.user;
+
         router.push("/");
       }
     } catch (error) {
