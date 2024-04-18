@@ -9,7 +9,10 @@ export async function POST(request: NextRequest) {
     const user = await query;
 
     if (user.rows.length > 0) {
-      return NextResponse.json({ status: 200, user: user.rows[0].username });
+      return NextResponse.json({
+        status: 200,
+        user: { userId: user.rows[0].id, username: user.rows[0].username },
+      });
     } else {
       return NextResponse.json("User does not exists", { status: 404 });
     }

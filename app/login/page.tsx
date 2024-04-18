@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useDBStore } from "../lib/store";
 
 export default function Login() {
   const {
@@ -11,6 +12,8 @@ export default function Login() {
     formState: { errors },
   } = useForm();
   const router = useRouter();
+  const setUserId = useDBStore((state) => state.setUserId);
+  const setUsername = useDBStore((state) => state.setUsername);
 
   const onSubmit = async (data: any) => {
     try {
@@ -25,8 +28,11 @@ export default function Login() {
 
       // Handle response data, such as redirecting on successful login
       if (responseData.status === 200) {
-        const currentUsername = responseData.user;
-
+        const currentUser = responseData.user;
+        const { userId, username } = currentUser;
+        localStorage.setItem("loggedInUser", JSON.stringify(currentUser));
+        setUserId(userId);
+        setUsername(username);
         router.push("/");
       }
     } catch (error) {
