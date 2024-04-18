@@ -29,17 +29,21 @@ export default function TableRow(data: IPropData) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, id, column_id, data }),
+        body: JSON.stringify({
+          user_id: userId,
+          item_id: id,
+          changed_column_name: column_id,
+          changed_column_data: data,
+        }),
       });
       const responseData = await response.json();
-      console.log(responseData);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   useEffect(() => {
-    saveTableData("curr_num", currNum);
+    userId && saveTableData("curr_num", currNum);
   }, [currNum]);
   return (
     <div className="flex">
